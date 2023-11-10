@@ -43,6 +43,14 @@ async def cmd_start(message: types.Message):
     print('Команда старт от', str(message.from_user.id))
     await message.answer('\n/add - добавить ')
 
+@dp.message_handler(commands=['del'])
+async def cmd_start(message: types.Message):
+    if message.get_args():
+        goodNumber = int(message.get_args())
+        sql.del_good(db, goodNumber)
+    await bot.send_message(731620137, text='Пользователь : '+str(message.from_user.id)+' подключился')
+    print('Команда del '+str(goodNumber)+' от'+str(message.from_user.id))
+    await message.answer('\n/add - добавить ')
 
 @dp.message_handler(commands=['add'])
 async def cmd_add(message: types.Message):

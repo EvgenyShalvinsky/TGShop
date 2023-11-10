@@ -17,7 +17,7 @@ def connect():
 def create_tables(base):
     try:
         con = base.cursor()
-        con.execute('''CREATE TABLE IF NOT EXISTS adm
+        con.execute('''CREATE TABLE IF NOT EXISTS users
                            (id INTEGER PRIMARY KEY AUTOINCREMENT, 
                            TgId TEXT,
                            Name TEXT,
@@ -63,3 +63,14 @@ def update_catalog(base, num, price):
         util.write_log("Добавлен администратор")
     except:
         util.write_bug("Ошибка добавления администратора")
+
+def del_good(base, num):
+    try:
+        base.cursor().execute(
+            '''DELETE FROM catalog WHERE GoodNumber = ?''',
+            [num]
+        )
+        base.commit()
+        util.write_log("Товар "+str(num)+' удален')
+    except:
+        util.write_bug("Товар " + str(num) + ' не может быть удален')
